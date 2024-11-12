@@ -5,7 +5,28 @@
     text-align: center;
 }
 
-th, td {
-    padding-left: 1rem;
-    padding-right: 1rem;
+/* Base styling for dark and light mode */
+body {
+    color: var(--text-color);
+    background-color: var(--background-color);
+}
+
+h1, h3 {
+    color: var(--header-color);
+}
+
+/* Light mode */
+:root {
+    --background-color: #ffffff;
+    --text-color: #333333;
+    --header-color: #213547;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background-color: #242424;
+        --text-color: #ffffff;
+        --header-color: #e0e4e8;
+    }
 }

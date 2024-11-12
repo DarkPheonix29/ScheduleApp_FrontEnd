@@ -1,87 +1,34 @@
-import { useEffect, useState } from 'react';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import './app.css';
+
+
+// Import your pages (simplified for now)
+import Login from './pages/LoginPage/Login';
+import StudentDashboard from './pages/StudentDashboardPage/StudentDashboard';
+import StudentCalendar from './pages/StudentCalendar';
+import InstructorDashboard from './pages/InstructorDashboard';
+import InstructorCalendar from './pages/InstructorCalendar';
+import InstructorStudentView from './pages/InstructorStudentView';
 
 function App() {
-    const [students, setStudents] = useState([]);
-    const [newStudentName, setNewStudentName] = useState('');
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState('');
-
-    useEffect(() => {
-        fetchStudents();
-    }, []);
-
-    const fetchStudents = async () => {
-        try {
-            const response = await fetch('/api/students'); // Your API endpoint
-            if (!response.ok) {
-                throw new Error('Failed to fetch students');
-            }
-            const result = await response.json();
-            setStudents(result);
-            setLoading(false);
-        } catch (err) {
-            setError(err.message);
-            setLoading(false);
-        }
-    };
-
-    const handleCreateStudent = async (e) => {
-        e.preventDefault();
-        setError('');
-
-        try {
-            const response = await fetch("/api/students?name=" + newStudentName, {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to create student');
-            }
-
-            setNewStudentName('');
-            fetchStudents(); // Refresh the list of students
-        } catch (err) {
-            setError(err.message);
-        }
-    };
+    console.log("App is rendering");
 
     return (
-        <div>
-            <h1>Student Management</h1>
-            <p>This component demonstrates fetching and creating students from the server.</p>
-
-            {loading ? (
-                <p><em>Loading... Please refresh once the backend has started.</em></p>
-            ) : error ? (
-                <p style={{ color: 'red' }}>{error}</p>
-            ) : (
-                <div>
-                    <h2>Students List</h2>
-                    <ul>
-                        {students.map(student => (
-                            <li key={student.id}>{student.name}</li>
-                        ))}
-                    </ul>
-                </div>
-            )}
-
-            <form onSubmit={handleCreateStudent}>
-                <h2>Create New Student</h2>
-                <input
-                    type="text"
-                    placeholder="Student Name"
-                    value={newStudentName}
-                    onChange={(e) => setNewStudentName(e.target.value)}
-                    required
-                />
-                <button type="submit">Add Student</button>
-            </form>
-        </div>
+        <Router>
+            <div className="App">
+                <Routes>
+                    <Route path="/" element={<Login />} />
+                    <Route path="/student-dashboard" element={<StudentDashboard />} />
+                    <Route path="/student-calendar" element={<StudentCalendar />} />
+                    <Route path="/instructor-dashboard" element={<InstructorDashboard />} />
+                    <Route path="/instructor-calendar" element={<InstructorCalendar />} />
+                    <Route path="/instructor-student-view" element={<InstructorStudentView />} />
+                </Routes>
+            </div>
+        </Router>
     );
 }
+
 
 export default App;

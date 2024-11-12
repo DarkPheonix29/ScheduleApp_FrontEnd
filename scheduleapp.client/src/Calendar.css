@@ -1,0 +1,53 @@
+﻿/* Style for the calendar container */
+.calendar-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for events */
+.rbc-event {
+    background-color: #305279; /* Updated to #305279 */
+    color: white;
+    border-radius: 8px;
+    padding: 5px;
+    transition: background-color 0.3s ease;
+}
+
+    .rbc-event:hover {
+        background-color: #264457; /* Darker shade for hover */
+    }
+
+/* Highlight today’s date */
+.rbc-today {
+    background-color: #e7f3ff;
+}
+
+/* Style for the buttons */
+.rbc-btn-group button {
+    background-color: #305279; /* Updated to #305279 */
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .rbc-btn-group button:hover {
+        background-color: #264457; /* Darker shade for hover */
+    }
+
+/* Styling the time slots */
+.rbc-timeslot {
+    background-color: #f8f8fa;
+    border: 1px solid #ddd;
+}
+
+/* Add shadows and border radius to the days */
+.rbc-day-bg {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

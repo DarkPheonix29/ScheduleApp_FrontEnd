@@ -1,0 +1,77 @@
+﻿/* Global Styles */
+body, html {
+    font-family: Rubik, Helvetica, Arial, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #212529;
+    font-size: 1rem;
+    line-height: 1.8;
+    overflow: hidden; /* Disable scrolling */
+    height: 100%; /* Ensure full height is used */
+}
+
+* {
+    box-sizing: border-box;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.loginContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.header {
+    background-color: #305279;
+    width: 100%; /* Ensures the header stretches full width */
+    display: flex;
+    justify-content: center; /* Center the logo horizontally */
+    padding: 10px 0; /* Reduced padding to make header thinner */
+    position: fixed; /* Fix it to the top of the page */
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Ensures it stays on top */
+}
+
+.logo {
+    max-width: 100%;
+    height: auto;
+}
+
+.loginOption {
+    color: #6ce5ff;
+    font: 700 48px Inter, sans-serif;
+    background-color: transparent;
+    border: 2px solid #6ce5ff;
+    padding: 20px 40px;
+    margin-top: 120px; /* Adjusted for header space */
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+    .loginOption:hover {
+        background-color: #6ce5ff;
+        color: #fff;
+    }
+
+@media (max-width: 991px) {
+    .loginOption {
+        font-size: 40px;
+        padding: 16px 32px;
+    }
+
+    .header {
+        padding: 8px 0; /* Even thinner header on smaller screens */
+    }
+}

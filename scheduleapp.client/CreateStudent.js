@@ -1,3 +1,4 @@
+// CreateStudent.js
 import React, { useState } from 'react';
 
 const CreateStudent = () => {
@@ -23,7 +24,6 @@ const CreateStudent = () => {
                 throw new Error('Failed to create student');
             }
 
-            // Optionally, you can redirect or update the UI after creation
             alert('Student created successfully!');
             setName('');
         } catch (err) {
