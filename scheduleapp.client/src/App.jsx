@@ -4,12 +4,12 @@ import './app.css';
 
 
 // Import your pages (simplified for now)
-import Login from './pages/LoginPage/Login';
-import StudentDashboard from './pages/StudentDashboardPage/StudentDashboard';
-import StudentCalendar from './pages/StudentCalendar';
-import InstructorDashboard from './pages/InstructorDashboard';
-import InstructorCalendar from './pages/InstructorCalendar';
-import InstructorStudentView from './pages/InstructorStudentView';
+import Login from './pages/Login/Login';
+import StudentDashboard from './pages/StudentDashboard/StudentDashboard';
+import StudentCalendar from './pages/StudentCalendar/StudentCalendar';
+import InstructorDashboard from './pages/InstructorDashboard/InstructorDashboard';
+import InstructorCalendar from './pages/InstructorCalendar/InstructorCalendar';
+import InstructorStudentView from './pages/InstructorStudentView/InstructorStudentView';
 
 function App() {
     console.log("App is rendering");
