@@ -1,0 +1,36 @@
+/* src/components/Calendar.module.css */
+.calendarContainer {
+    margin-top: 20px;
+    height: 500px; /* Ensure the calendar has a height to be rendered */
+    background-color: #fff; /* Optional: to make sure it's visible */
+}
+
+.eventDetails {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+}
+
+.newEvent {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #e3f2fd;
+    border: 1px solid #ddd;
+}
+
+/* Optional: Style for the calendar container for responsive design */
+@media (max-width: 768px) {
+    .calendarContainer {
+        height: 400px;
+    }
+}
+
+.calendarContainer {
+    width: 100%;
+    max-width: 1243px;
+    height: 300px; /* Visible height for 4 blocks */
+    border: 1px solid #ccc;
+    margin-top: 20px;
+    position: relative; /* Ensures correct positioning for scrolling */
+}
