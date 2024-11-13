@@ -1,0 +1,127 @@
+.welcomeMessage {
+    margin-top: 20px; /* Reduce the top margin to move the text higher */
+    width: 775px;
+    max-width: 100%;
+    padding-bottom: 101px;
+    overflow: hidden;
+    color: #6ce5ff;
+    text-align: center;
+    font: 400 48px Inter, sans-serif;
+}
+
+.header {
+    background-color: #305279;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    height: 70px; /* Thinner header */
+    position: fixed;
+    top: 0;
+    left: 0; /* Make sure it spans all the way to the left */
+    z-index: 10;
+}
+
+.logo {
+    aspect-ratio: 3.17;
+    object-fit: contain;
+    object-position: center;
+    width: 250px;
+    max-width: 100%;
+}
+
+.menuContainer {
+    display: flex;
+    flex-direction: column;
+    margin: auto 0;
+}
+
+.menuLine {
+    height: 2px;
+    border: 2px solid #fff;
+    margin-top: 4px;
+}
+
+.welcomeMessage {
+    margin-top: 50px; /* Adjusted for fixed header */
+    width: 775px;
+    max-width: 100%;
+    padding-bottom: 101px;
+    color: #6ce5ff;
+    text-align: center;
+    font: 400 48px Inter, sans-serif;
+}
+
+.lessonDate {
+    font-weight: 700;
+    font-size: 32px;
+    color: #000;
+}
+
+.scheduleContainer {
+    display: flex;
+    margin-top: 20px; /* Reduced further to move the container up */
+    height: auto; /* Adjust height to fit content */
+    width: 472px;
+    max-width: 100%;
+    flex-direction: column;
+    font-family: Inter, sans-serif;
+    font-weight: 700;
+    text-align: center;
+    justify-content: start;
+}
+
+.scheduleTitle {
+    color: #6ce5ff;
+    font-size: 32px;
+    align-self: center;
+    margin-bottom: 1px; /* Slightly reduce bottom margin to compact spacing */
+}
+
+.viewCalendar {
+    color: #000;
+    font-size: 16px;
+    margin-top: 0; /* Remove any top margin */
+    padding-top: 0; /* Ensure no padding at the top */
+}
+
+.calendarContainer {
+    width: 100%;
+    max-width: 1243px;
+    height: 300px; /* Visible height for 4 blocks */
+    border: 1px solid #ccc;
+    margin-top: 20px;
+    position: relative; /* Ensures correct positioning for scrolling */
+}
+
+@media (max-width: 991px) {
+    .header {
+        padding: 10px 20px;
+        height: 60px; /* Thinner header on mobile */
+    }
+
+    .logo {
+        width: 180px;
+    }
+
+    .welcomeMessage {
+        max-width: 100%;
+        font-size: 40px;
+        padding-bottom: 100px;
+        margin-top: 20px; /* Adjust the margin-top for smaller screens */
+    }
+
+    .scheduleContainer {
+        margin-top: 20px;
+    }
+
+    .scheduleTitle {
+        font-size: 28px;
+    }
+
+    .calendarContainer {
+        max-width: 100%;
+        margin-top: 15px;
+    }
+}

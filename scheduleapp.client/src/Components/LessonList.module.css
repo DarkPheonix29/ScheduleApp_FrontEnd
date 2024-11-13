@@ -1,0 +1,32 @@
+/* src/components/LessonList.module.css */
+
+.lessonList {
+    padding: 20px;
+}
+
+.lessonItem {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+    .lessonItem h3 {
+        font-size: 18px;
+        color: #305279;
+    }
+
+    .lessonItem p {
+        font-size: 16px;
+        color: #333;
+    }
+
+.lessonDetailsLink {
+    font-size: 14px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+    .lessonDetailsLink:hover {
+        text-decoration: underline;
+    }

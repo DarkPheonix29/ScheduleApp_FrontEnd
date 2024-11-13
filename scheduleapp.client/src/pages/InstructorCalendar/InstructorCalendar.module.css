@@ -1,0 +1,77 @@
+/* InstructorCalendar.module.css */
+
+/* Header */
+.header {
+    background-color: #305279;
+    width: 100%; /* Full width */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    height: 70px; /* Matching height to StudentDashboard header */
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+.logo {
+    aspect-ratio: 3.17;
+    object-fit: contain;
+    object-position: center;
+    width: 250px; /* Matching logo width */
+    max-width: 100%;
+}
+
+.menuContainer {
+    display: flex;
+    flex-direction: column;
+    margin: auto 0;
+}
+
+.menuLine {
+    height: 2px;
+    border: 2px solid #fff;
+    margin-top: 4px;
+}
+
+/* Main content offset for the header */
+.mainContent {
+    padding-top: 80px; /* Adjust for fixed header */
+    display: flex;
+    justify-content: center;
+    flex-direction: row; /* Changed to row for calendar */
+}
+
+/* Calendar container */
+.calendarContainer {
+    width: 75vw; /* 75% of the screen width for the calendar */
+    max-width: 1200px; /* Optional: limit the max width */
+    height: calc(100vh - 80px); /* Full height minus header height */
+    padding: 20px; /* Padding for spacing on the sides */
+    position: relative;
+}
+
+/* Ensure React Big Calendar takes full space */
+.rbc-calendar {
+    width: 100%;
+    height: 100%;
+}
+
+/* Adjust for smaller screen sizes */
+@media (max-width: 991px) {
+    /* Header adjustments for mobile screens */
+    .header {
+        padding: 10px 20px;
+        height: 60px; /* Slightly thinner header on mobile */
+    }
+
+    .logo {
+        width: 180px;
+    }
+
+    .calendarContainer {
+        width: 100%; /* Calendar takes full width on smaller screens */
+        padding: 0 15px; /* Less padding on small screens */
+    }
+}

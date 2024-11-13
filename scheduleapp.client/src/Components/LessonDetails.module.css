@@ -1,0 +1,19 @@
+/* src/pages/LessonDetails/LessonDetails.module.css */
+
+.lessonDetails {
+    padding: 20px;
+}
+
+    .lessonDetails h2 {
+        color: #305279;
+        font-size: 24px;
+    }
+
+    .lessonDetails p {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .lessonDetails strong {
+        color: #000;
+    }

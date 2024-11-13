@@ -1,27 +1,44 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Calendar } from 'react-big-calendar';
+import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
-import { momentLocalizer } from 'react-big-calendar';
-import 'react-big-calendar/lib/css/react-big-calendar.css';
-
+import styles from './StudentCalendar.module.css';
 
 const localizer = momentLocalizer(moment);
 
-const StudentCalendar = () => {
-    return (
-        <div>
-            <h2>Student Full Calendar</h2>
+const Header = () => (
+    <header className={styles.header}>
+        <Link to="/">
+            <img
+                src="https://cdn.builder.io/api/v1/image/assets/TEMP/b9e9e5de92c55fb604aec2676d045431b667b6fc690c90eccbe454d2f5e88fde?placeholderIfAbsent=true&apiKey=7a6d6551ec8b4e26865b758612878fc8"
+                alt="Company Logo"
+                className={styles.logo}
+            />
+        </Link>
+        <nav className={styles.menuContainer}>
+            <div className={styles.menuLine} />
+            <div className={styles.menuLine} />
+            <div className={styles.menuLine} />
+        </nav>
+    </header>
+);
+
+const StudentCalendar = () => (
+    <main className={styles.mainContent}>
+        <Header />
+        <div className={styles.calendarContainer}>
             <Calendar
                 localizer={localizer}
-                events={[]}
+                events={[]} // Add events here
                 startAccessor="start"
                 endAccessor="end"
-                style={{ height: 500 }}
+                defaultView="month"
+                views={['month', 'week', 'day']}
+                defaultDate={new Date()}
+                style={{ height: '100%' }} // Ensure calendar takes full container height
             />
-            <Link to="/student-dashboard">Back to Dashboard</Link>
         </div>
-    );
-};
+    </main>
+);
 
 export default StudentCalendar;

@@ -1,25 +1,17 @@
-.welcomeMessage {
-    margin-top: 20px; /* Reduce the top margin to move the text higher */
-    width: 775px;
-    max-width: 100%;
-    padding-bottom: 101px;
-    overflow: hidden;
-    color: #6ce5ff;
-    text-align: center;
-    font: 400 48px Inter, sans-serif;
-    }
+/* StudentCalendar.module.css */
 
+/* Header */
 .header {
     background-color: #305279;
-    width: 100%;
+    width: 100%; /* Full width */
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    height: 70px; /* Thinner header */
+    height: 70px; /* Matching height to StudentDashboard header */
     position: fixed;
     top: 0;
-    left: 0; /* Make sure it spans all the way to the left */
+    left: 0;
     z-index: 10;
 }
 
@@ -27,7 +19,7 @@
     aspect-ratio: 3.17;
     object-fit: contain;
     object-position: center;
-    width: 250px;
+    width: 250px; /* Matching logo width */
     max-width: 100%;
 }
 
@@ -43,87 +35,66 @@
     margin-top: 4px;
 }
 
-.welcomeMessage {
-    margin-top: 50px; /* Adjusted for fixed header */
-    width: 775px;
-    max-width: 100%;
-    padding-bottom: 101px;
-    color: #6ce5ff;
-    text-align: center;
-    font: 400 48px Inter, sans-serif;
-}
-
-.lessonDate {
-    font-weight: 700;
-    font-size: 32px;
-    color: #000;
-}
-
-.scheduleContainer {
+/* Main content offset for the header */
+.mainContent {
+    padding-top: 80px; /* Adjust for fixed header */
     display: flex;
-    margin-top: 20px; /* Reduced further to move the container up */
-    height: auto; /* Adjust height to fit content */
-    width: 472px;
-    max-width: 100%;
-    flex-direction: column;
-    font-family: Inter, sans-serif;
-    font-weight: 700;
-    text-align: center;
-    justify-content: start;
+    justify-content: center;
+    flex-direction: row; /* Changed to row for calendar and filters */
 }
 
-.scheduleTitle {
-    color: #6ce5ff;
-    font-size: 32px;
-    align-self: center;
-    margin-bottom: 1px; /* Slightly reduce bottom margin to compact spacing */
-}
-
-.viewCalendar {
-    color: #000;
-    font-size: 16px;
-    margin-top: 0; /* Remove any top margin */
-    padding-top: 0; /* Ensure no padding at the top */
-}
-
+/* Calendar container */
 .calendarContainer {
-    width: 100%;
-    max-width: 1243px;
-    height: 300px; /* Visible height for 4 blocks */
-    border: 1px solid #ccc;
-    margin-top: 20px;
-    position: relative; /* Ensures correct positioning for scrolling */
+    width: 75vw; /* 75% of the screen width for the calendar */
+    max-width: 1200px; /* Optional: limit the max width */
+    height: calc(100vh - 80px); /* Full height minus header height */
+    padding: 20px; /* Padding for spacing on the sides */
+    position: relative;
 }
 
+/* Filters container */
+.filtersContainer {
+    width: 20vw; /* 20% of the screen width for the filters */
+    height: calc(100vh - 80px); /* Full height minus header height */
+    padding: 20px;
+    border-right: 1px solid #ddd; /* Optional: visual separation for the filters */
+    background-color: #f5f5f5; /* Light background color for filters */
+    overflow-y: auto; /* Scrollable if the filters take up more space */
+}
 
+/* Ensure React Big Calendar takes full space */
+.rbc-calendar {
+    width: 100%;
+    height: 100%;
+}
 
 @media (max-width: 991px) {
+    /* Header adjustments for mobile screens */
     .header {
         padding: 10px 20px;
-        height: 60px; /* Thinner header on mobile */
+        height: 60px; /* Slightly thinner header on mobile */
     }
 
     .logo {
         width: 180px;
     }
 
-    .welcomeMessage {
-        max-width: 100%;
-        font-size: 40px;
-        padding-bottom: 100px;
-        margin-top: 20px; /* Adjust the margin-top for smaller screens */
-    }
-
-    .scheduleContainer {
-        margin-top: 20px;
-    }
-
-    .scheduleTitle {
-        font-size: 28px;
-    }
-
     .calendarContainer {
-        max-width: 100%;
-        margin-top: 15px;
+        width: 100%; /* Calendar takes full width on smaller screens */
+        padding: 0 15px; /* Less padding on small screens */
     }
+
+    .filtersContainer {
+        width: 100%; /* Filters take full width on small screens */
+        height: auto; /* Let the filters stack below */
+        margin-top: 20px; /* Space between calendar and filters */
+    }
+}
+
+/* Optional styles for filter items */
+.filterItem {
+    margin-bottom: 15px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #305279;
 }
