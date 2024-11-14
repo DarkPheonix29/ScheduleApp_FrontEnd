@@ -1,13 +1,12 @@
 .welcomeMessage {
-    margin-top: 20px; /* Reduce the top margin to move the text higher */
-    width: 775px;
+    margin-top: 15px;
+    width: 581px;
     max-width: 100%;
-    padding-bottom: 101px;
-    overflow: hidden;
+    padding-bottom: 75.75px;
     color: #6ce5ff;
     text-align: center;
-    font: 400 48px Inter, sans-serif;
-    }
+    font: 400 36px Inter, sans-serif;
+}
 
 .header {
     background-color: #305279;
@@ -15,11 +14,11 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
-    height: 70px; /* Thinner header */
+    padding: 7.5px 15px;
+    height: 52.5px;
     position: fixed;
     top: 0;
-    left: 0; /* Make sure it spans all the way to the left */
+    left: 0;
     z-index: 10;
 }
 
@@ -27,7 +26,7 @@
     aspect-ratio: 3.17;
     object-fit: contain;
     object-position: center;
-    width: 250px;
+    width: 187.5px;
     max-width: 100%;
 }
 
@@ -38,32 +37,22 @@
 }
 
 .menuLine {
-    height: 2px;
-    border: 2px solid #fff;
-    margin-top: 4px;
-}
-
-.welcomeMessage {
-    margin-top: 50px; /* Adjusted for fixed header */
-    width: 775px;
-    max-width: 100%;
-    padding-bottom: 101px;
-    color: #6ce5ff;
-    text-align: center;
-    font: 400 48px Inter, sans-serif;
+    height: 1.5px;
+    border: 1.5px solid #fff;
+    margin-top: 3px;
 }
 
 .lessonDate {
     font-weight: 700;
-    font-size: 32px;
+    font-size: 24px;
     color: #000;
 }
 
 .scheduleContainer {
     display: flex;
-    margin-top: 20px; /* Reduced further to move the container up */
-    height: auto; /* Adjust height to fit content */
-    width: 472px;
+    margin-top: 15px;
+    height: auto;
+    width: 354px;
     max-width: 100%;
     flex-direction: column;
     font-family: Inter, sans-serif;
@@ -74,56 +63,53 @@
 
 .scheduleTitle {
     color: #6ce5ff;
-    font-size: 32px;
+    font-size: 24px;
     align-self: center;
-    margin-bottom: 1px; /* Slightly reduce bottom margin to compact spacing */
+    margin-bottom: 0.75px;
 }
 
 .viewCalendar {
     color: #000;
-    font-size: 16px;
-    margin-top: 0; /* Remove any top margin */
-    padding-top: 0; /* Ensure no padding at the top */
+    font-size: 12px;
+    margin-top: 0;
+    padding-top: 0;
 }
 
 .calendarContainer {
     width: 100%;
-    max-width: 1243px;
-    height: 300px; /* Visible height for 4 blocks */
+    max-width: 932px;
+    height: 225px;
     border: 1px solid #ccc;
-    margin-top: 20px;
-    position: relative; /* Ensures correct positioning for scrolling */
+    margin-top: 15px;
+    position: relative;
 }
-
-
 
 @media (max-width: 991px) {
     .header {
-        padding: 10px 20px;
-        height: 60px; /* Thinner header on mobile */
+        padding: 7.5px 15px;
+        height: 45px;
     }
 
     .logo {
-        width: 180px;
+        width: 135px;
     }
 
     .welcomeMessage {
-        max-width: 100%;
-        font-size: 40px;
-        padding-bottom: 100px;
-        margin-top: 20px; /* Adjust the margin-top for smaller screens */
+        font-size: 30px;
+        padding-bottom: 75px;
+        margin-top: 15px;
     }
 
     .scheduleContainer {
-        margin-top: 20px;
+        margin-top: 15px;
     }
 
     .scheduleTitle {
-        font-size: 28px;
+        font-size: 20px;
     }
 
     .calendarContainer {
-        max-width: 100%;
-        margin-top: 15px;
+        max-width: 90%;
+        margin-top: 12px;
     }
 }

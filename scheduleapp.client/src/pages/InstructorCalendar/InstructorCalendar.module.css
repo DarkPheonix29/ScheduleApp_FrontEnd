@@ -1,14 +1,12 @@
-/* InstructorCalendar.module.css */
-
 /* Header */
 .header {
     background-color: #305279;
-    width: 100%; /* Full width */
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 20px;
-    height: 70px; /* Matching height to StudentDashboard header */
+    padding: 7.5px 15px; /* Reduced padding */
+    height: 52.5px; /* Reduced height */
     position: fixed;
     top: 0;
     left: 0;
@@ -19,7 +17,7 @@
     aspect-ratio: 3.17;
     object-fit: contain;
     object-position: center;
-    width: 250px; /* Matching logo width */
+    width: 187.5px; /* Scaled logo size */
     max-width: 100%;
 }
 
@@ -30,25 +28,25 @@
 }
 
 .menuLine {
-    height: 2px;
-    border: 2px solid #fff;
-    margin-top: 4px;
+    height: 1.5px; /* Slightly thinner */
+    border: 1.5px solid #fff;
+    margin-top: 3px;
 }
 
 /* Main content offset for the header */
 .mainContent {
-    padding-top: 80px; /* Adjust for fixed header */
+    padding-top: 60px; /* Adjust for fixed header */
     display: flex;
     justify-content: center;
-    flex-direction: row; /* Changed to row for calendar */
+    flex-direction: row;
 }
 
 /* Calendar container */
 .calendarContainer {
-    width: 75vw; /* 75% of the screen width for the calendar */
-    max-width: 1200px; /* Optional: limit the max width */
-    height: calc(100vh - 80px); /* Full height minus header height */
-    padding: 20px; /* Padding for spacing on the sides */
+    width: 56.25vw; /* 75% of the screen width scaled down */
+    max-width: 900px; /* Scaled max-width */
+    height: calc(75vh - 60px); /* Full height minus header height */
+    padding: 15px; /* Reduced padding */
     position: relative;
 }
 
@@ -58,20 +56,18 @@
     height: 100%;
 }
 
-/* Adjust for smaller screen sizes */
 @media (max-width: 991px) {
-    /* Header adjustments for mobile screens */
     .header {
-        padding: 10px 20px;
-        height: 60px; /* Slightly thinner header on mobile */
+        padding: 7.5px 15px;
+        height: 45px; /* Thinner header */
     }
 
     .logo {
-        width: 180px;
+        width: 135px; /* Smaller logo */
     }
 
     .calendarContainer {
-        width: 100%; /* Calendar takes full width on smaller screens */
-        padding: 0 15px; /* Less padding on small screens */
+        width: 90%; /* Calendar takes slightly smaller width on mobile */
+        padding: 0 12px; /* Adjusted padding */
     }
 }

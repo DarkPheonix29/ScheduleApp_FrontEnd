@@ -1,3 +1,4 @@
+// src/services/EventService.js
 import axios from 'axios';
 
 const API_URL = '/api/events';
@@ -30,6 +31,17 @@ export const bookLesson = async (eventId, studentId) => {
         return response.data;
     } catch (error) {
         console.error("Error booking lesson:", error);
+        return null;
+    }
+};
+
+// New function to add an event
+export const createEvent = async (eventData) => {
+    try {
+        const response = await axios.post(API_URL, eventData);
+        return response.data;
+    } catch (error) {
+        console.error("Error creating event:", error);
         return null;
     }
 };
