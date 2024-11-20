@@ -1,32 +1,66 @@
-// src/App.jsx
-
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import './app.css';
+import { AuthProvider } from "./services/authService";
 
 // Import your pages
 import Login from './pages/Login/Login';
+import SignUp from './pages/SignUp/SignUp';
 import StudentDashboard from './pages/StudentDashboard/StudentDashboard';
 import StudentCalendar from './pages/StudentCalendar/StudentCalendar';
 import InstructorDashboard from './pages/InstructorDashboard/InstructorDashboard';
 import InstructorCalendar from './pages/InstructorCalendar/InstructorCalendar';
-import LessonDetails from './components/LessonDetails'; // Add Lesson Details Page
+import AdminPanel from './pages/AdminPanel/AdminPanel'; // Import Admin Panel
+import ProtectedRoute from './Services/ProtectedRoute'; // New protected route component
 
 function App() {
     return (
-        <Router>
-            <div className="App">
-                <Routes>
-                    <Route path="/" element={<Login />} />
-                    <Route path="/student-dashboard" element={<StudentDashboard />} />
-                    <Route path="/student-calendar" element={<StudentCalendar />} />
-                    <Route path="/instructor-dashboard" element={<InstructorDashboard />} />
-                    <Route path="/instructor-calendar" element={<InstructorCalendar />} />
-                    <Route path="/lesson-details/:lessonId" element={<LessonDetails />} /> {/* Add this route */}
-                </Routes>
-            </div>
-        </Router>
+        <AuthProvider>
+            <Router>
+                <div className="App">
+                    <Routes>
+                        {/* Redirect the root path to /login */}
+                        <Route path="/" element={<Navigate to="/login" />} />
+
+                        {/* Public Routes */}
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/signup" element={<SignUp />} />
+
+                        {/* Protected Routes */}
+                        <Route
+                            path="/student-dashboard"
+                            element={<ProtectedRoute requiredRole="student"><StudentDashboard /></ProtectedRoute>}
+                        />
+                        <Route
+                            path="/student-calendar"
+                            element={<ProtectedRoute requiredRole="student"><StudentCalendar /></ProtectedRoute>}
+                        />
+                        <Route
+                            path="/instructor-dashboard"
+                            element={<ProtectedRoute requiredRole="instructor"><InstructorDashboard /></ProtectedRoute>}
+                        />
+                        <Route
+                            path="/instructor-calendar"
+                            element={<ProtectedRoute requiredRole="instructor"><InstructorCalendar /></ProtectedRoute>}
+                        />
+                        <Route
+                            path="/admin-panel"
+                            element={<ProtectedRoute requiredRole="admin"><AdminPanel /></ProtectedRoute>}
+                        />
+                    </Routes>
+                </div>
+            </Router>
+        </AuthProvider>
     );
 }
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+root.render(
+    <AuthProvider>
+        <App />
+    </AuthProvider>
+);
 
 export default App;

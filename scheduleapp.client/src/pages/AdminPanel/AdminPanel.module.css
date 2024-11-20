@@ -1,0 +1,46 @@
+﻿.adminPanel {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f9f9f9;
+    color: #333;
+    height: 100vh;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+    .header h1 {
+        font-size: 2.5em;
+        color: #444;
+    }
+
+    .header p {
+        color: #666;
+        margin-top: 5px;
+    }
+
+.mainContent {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.section {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+    .section h2 {
+        font-size: 1.8em;
+        color: #222;
+        margin-bottom: 10px;
+    }
+
+    .section p {
+        color: #555;
+        font-size: 1em;
+    }

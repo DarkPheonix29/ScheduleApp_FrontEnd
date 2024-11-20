@@ -22,7 +22,6 @@ main {
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Input group styling */
 .inputGroup {
     display: flex;
     flex-direction: column;
@@ -44,11 +43,18 @@ main {
         border: 1px solid #ccc;
         border-radius: 5px;
         margin-top: 5px;
-        color: black; /* Keep text color black */
+        color: black; /* Ensure text color is black */
         background-color: #fff; /* Ensure background remains white */
+        box-sizing: border-box; /* Ensure consistent sizing */
     }
 
-/* Dark mode adjustment */
+        /* Input hover and focus */
+        .inputGroup input:focus {
+            outline: none;
+            border-color: #6ce5ff; /* Highlight color for input focus */
+        }
+
+/* Dark mode adjustment for labels and inputs */
 body.dark-mode .inputGroup label {
     color: black; /* Keep label text black in dark mode */
 }
