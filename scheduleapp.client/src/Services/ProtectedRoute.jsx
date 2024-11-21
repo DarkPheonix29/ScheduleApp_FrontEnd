@@ -1,22 +1,19 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../services/authService"; // Import useAuth
+import { useAuth } from "../services/authService";
 
 function ProtectedRoute({ children, requiredRole }) {
-    const { currentUser, role } = useAuth() || {}; // Add a fallback value
+    const { currentUser, role } = useAuth();
 
     if (!currentUser) {
-        // Redirect or show a loading screen if not authenticated
-        return <Navigate to="/login" />;
+        return <Navigate to="/login" replace />;
     }
 
     if (requiredRole && role !== requiredRole) {
-        // Redirect or show an error if the role doesn't match
-        return <Navigate to="/unauthorized" />;
+        return <Navigate to="/unauthorized" replace />;
     }
 
     return children;
 }
 
 export default ProtectedRoute;
-

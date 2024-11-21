@@ -1,5 +1,3 @@
-// authService.jsx
-
 import { useState, useEffect, createContext, useContext } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../firebase"; // Ensure db is imported from firebase
@@ -9,7 +7,7 @@ import { doc, setDoc, getDoc } from "firebase/firestore"; // Import Firestore fu
 const AuthContext = createContext(null);
 
 // Function to sign up a user
-export const signUp = async (email, password, role) => {
+export const signUp = async (email, password, role = "student") => {
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
@@ -55,15 +53,30 @@ export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState(null);
     const [role, setRole] = useState(null);
 
+    // UseEffect for tracking user authentication state
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (user) => {
             if (user) {
+                console.log("User detected:", user);
+
                 setCurrentUser(user);
 
-                // Fetch role from Firestore
-                const userDoc = await getDoc(doc(db, "users", user.uid));
-                setRole(userDoc.exists() ? userDoc.data().role : null);
+                try {
+                    // Try fetching the role from Firestore
+                    const userDoc = await getDoc(doc(db, "users", user.uid));
+                    if (userDoc.exists()) {
+                        console.log("Role fetched from Firestore:", userDoc.data().role);
+                        setRole(userDoc.data().role);
+                    } else {
+                        console.log("No role found in Firestore.");
+                        setRole(null);
+                    }
+                } catch (error) {
+                    console.error("Error fetching role from Firestore:", error.message);
+                    setRole(null);
+                }
             } else {
+                console.log("No user detected.");
                 setCurrentUser(null);
                 setRole(null);
             }

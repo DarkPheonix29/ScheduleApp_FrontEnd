@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import './app.css';
 import { AuthProvider } from "./services/authService";
@@ -54,13 +53,5 @@ function App() {
         </AuthProvider>
     );
 }
-
-const root = ReactDOM.createRoot(document.getElementById("root"));
-
-root.render(
-    <AuthProvider>
-        <App />
-    </AuthProvider>
-);
 
 export default App;
