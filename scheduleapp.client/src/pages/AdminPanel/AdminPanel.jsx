@@ -10,9 +10,14 @@ function AdminPanel() {
     const fetchKeys = async () => {
         try {
             const response = await axios.get("/api/admin/keys"); // Endpoint to fetch keys from the backend
-            setKeys(response.data.keys);
+            if (response.data && Array.isArray(response.data.keys)) {
+                setKeys(response.data.keys); // Update keys with the array returned from backend
+            } else {
+                setKeys([]); // Default to empty array if no valid keys are returned
+            }
         } catch (error) {
             console.error("Error fetching keys:", error);
+            setKeys([]); // Set to empty array in case of error or invalid response
         }
     };
 
