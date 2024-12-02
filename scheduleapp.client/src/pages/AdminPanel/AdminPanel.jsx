@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; // Import navigate for redirection
+import { logOut } from "../../services/authService"; // Import logOut function
 import styles from './AdminPanel.module.css';
 
 function AdminPanel() {
     const [keys, setKeys] = useState([]); // State to store generated keys
     const [newKey, setNewKey] = useState(""); // State for the new key to display
+    const navigate = useNavigate(); // For navigation after logout
 
     // Fetch the list of keys from Firestore
     const fetchKeys = async () => {
@@ -42,6 +45,16 @@ function AdminPanel() {
         }
     };
 
+    // Handle logging out
+    const handleLogout = async () => {
+        try {
+            await logOut(); // Log the user out
+            navigate("/login"); // Redirect to login page after logout
+        } catch (error) {
+            console.error("Error logging out:", error);
+        }
+    };
+
     // Fetch keys when component mounts
     useEffect(() => {
         fetchKeys();
@@ -52,7 +65,13 @@ function AdminPanel() {
             <header className={styles.header}>
                 <h1>Admin Panel</h1>
                 <p>Manage your application here</p>
+
+                {/* Logout Button */}
+                <button onClick={handleLogout} className={styles.logoutButton}>
+                    Logout
+                </button>
             </header>
+
             <main className={styles.mainContent}>
                 <section className={styles.section}>
                     <h2>User Management</h2>

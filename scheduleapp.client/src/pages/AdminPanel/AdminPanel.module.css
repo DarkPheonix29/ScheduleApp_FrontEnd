@@ -4,6 +4,7 @@
     background-color: #f9f9f9;
     color: #333;
     height: 100vh;
+    position: relative; /* Make the container relative to position elements inside it */
 }
 
 .header {
@@ -43,4 +44,22 @@
     .section p {
         color: #555;
         font-size: 1em;
+    }
+
+/* Styling for the logout button */
+.logoutButton {
+    position: absolute; /* Position the button relative to the header */
+    top: 20px;
+    right: 20px;
+    padding: 10px 15px;
+    background-color: #ff4d4f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+    .logoutButton:hover {
+        background-color: #ff7875; /* Slightly darker on hover */
     }

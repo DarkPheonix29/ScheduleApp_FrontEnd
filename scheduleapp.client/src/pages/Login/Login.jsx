@@ -1,13 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { logIn } from "../../services/authService"; // Firebase login function
+import { useAuth } from "../../Services/authService"; // Assuming you have a context for auth
 import styles from "./Login.module.css";
 
 function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(""); // To display login error messages
+    const { currentUser, role } = useAuth(); // Get the user and role from AuthContext
     const navigate = useNavigate(); // For navigation after login
+
+    // If user is already logged in and has a role, navigate based on the role
+    useEffect(() => {
+        if (currentUser && role) {
+            switch (role) {
+                case "admin":
+                    navigate("/admin-panel");
+                    break;
+                case "student":
+                    navigate("/student-dashboard");
+                    break;
+                case "instructor":
+                    navigate("/instructor-dashboard");
+                    break;
+                default:
+                    setError("Role not assigned. Please contact support.");
+                    break;
+            }
+        }
+    }, [currentUser, role, navigate]);
 
     // Handle login form submission
     const handleLogin = async (e) => {
@@ -17,7 +39,7 @@ function LoginPage() {
         try {
             const { user, role } = await logIn(email, password);
 
-            if (user) {
+            if (user && role) {
                 // Redirect based on role
                 switch (role) {
                     case "admin":
