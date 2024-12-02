@@ -1,22 +1,32 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Import useNavigate for redirection
-import axios from "axios"; // Axios for API calls
-import styles from './SignUp.module.css';
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import styles from "./SignUp.module.css";
 
 function SignUpPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [registrationKey, setRegistrationKey] = useState(""); // New state for registration key
-    const [error, setError] = useState(""); // To show any signup error message
-    const navigate = useNavigate(); // To redirect the user after signup
+    const [registrationKey, setRegistrationKey] = useState("");
+    const [error, setError] = useState("");
+    const navigate = useNavigate();
 
-    // Handle signup form submission
     const handleSignUp = async (e) => {
-        e.preventDefault(); // Prevent form from refreshing the page
+        e.preventDefault();
+        setError("");
 
         if (password !== confirmPassword) {
-            setError("Passwords do not match. Please try again.");
+            setError("Passwords do not match.");
+            return;
+        }
+
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            setError("Invalid email format.");
+            return;
+        }
+
+        if (password.length < 8) {
+            setError("Password must be at least 8 characters long.");
             return;
         }
 
@@ -25,41 +35,35 @@ function SignUpPage() {
                 email,
                 password,
                 registrationKey,
-                name: email.split('@')[0], // Just using email before '@' as the name for simplicity
+                name: email.split("@")[0],
             });
 
             if (response.data.message === "User registered successfully") {
-                // Redirect to the login page after a successful signup
                 navigate("/login");
             } else {
-                // If the signup failed, show an error message
-                setError("Unable to sign up. Please try again.");
+                setError("Signup failed. Please try again.");
             }
-        } catch (error) {
-            console.error("Signup Error: ", error);
-            setError(error.response?.data?.message || "An error occurred while signing up. Please try again.");
+        } catch (err) {
+            setError(err.response?.data?.message || "An error occurred during signup.");
         }
     };
 
     return (
-        <main className={styles.loginContainer}>
-            {/* Header with logo */}
+        <main className={styles.signUpContainer}>
             <header className={styles.header}>
                 <img
-                    src="https://your-logo-url-here.com"
+                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/b9e9e5de92c55fb604aec2676d045431b667b6fc690c90eccbe454d2f5e88fde?placeholderIfAbsent=true&apiKey=7a6d6551ec8b4e26865b758612878fc8"
                     alt="Company Logo"
                     className={styles.logo}
                 />
             </header>
 
-            {/* Signup Form */}
-            <form onSubmit={handleSignUp} className={styles.loginForm}>
+            <form onSubmit={handleSignUp} className={styles.signUpForm}>
                 <div className={styles.inputGroup}>
                     <label htmlFor="email">Email:</label>
                     <input
                         type="email"
                         id="email"
-                        name="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
@@ -72,7 +76,6 @@ function SignUpPage() {
                     <input
                         type="password"
                         id="password"
-                        name="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         required
@@ -88,6 +91,7 @@ function SignUpPage() {
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
                         required
+                        className={styles.input}
                     />
                 </div>
 
@@ -99,21 +103,17 @@ function SignUpPage() {
                         value={registrationKey}
                         onChange={(e) => setRegistrationKey(e.target.value)}
                         required
+                        className={styles.input}
                     />
                 </div>
 
-                {/* Show error message */}
                 {error && <p className={styles.error}>{error}</p>}
 
-                <button type="submit" className={styles.button}>
-                    Sign Up
-                </button>
+                <button type="submit" className={styles.signUpButton}>Sign Up</button>
 
-                {/* Link to Login page */}
-                <div className={styles.switchForm}>
-                    <p>Already have an account?</p>
-                    <Link to="/login">Login</Link>
-                </div>
+                <p className={styles.loginLink}>
+                    Already have an account? <Link to="/login">Login</Link>
+                </p>
             </form>
         </main>
     );
