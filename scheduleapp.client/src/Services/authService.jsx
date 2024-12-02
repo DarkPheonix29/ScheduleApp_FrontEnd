@@ -62,50 +62,7 @@ export const logOut = async () => {
     }
 };
 
-export function AuthProvider({ children }) {
-    const [currentUser, setCurrentUser] = useState(null);
-    const [role, setRole] = useState(null);
 
-    // UseEffect for tracking user authentication state
-    useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                console.log("User detected:", user);
-
-                setCurrentUser(user);
-
-                try {
-                    // Try fetching the role from Firestore
-                    const userDoc = await getDoc(doc(db, "users", user.uid));
-                    if (userDoc.exists()) {
-                        console.log("Role fetched from Firestore:", userDoc.data().role);
-                        setRole(userDoc.data().role);
-                    } else {
-                        console.log("No role found in Firestore.");
-                        setRole(null);
-                    }
-                } catch (error) {
-                    console.error("Error fetching role from Firestore:", error.message);
-                    setRole(null);
-                }
-            } else {
-                console.log("No user detected.");
-                setCurrentUser(null);
-                setRole(null);
-            }
-        });
-
-        return () => unsubscribe();
-    }, []);
-
-    return (
-        <AuthContext.Provider value={{ currentUser, role }}>
-            {children}
-        </AuthContext.Provider>
-    );
-}
-
-// Custom hook to use AuthContext
 export function useAuth() {
     return useContext(AuthContext);
 }
