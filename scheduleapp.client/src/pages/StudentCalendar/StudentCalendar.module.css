@@ -5,8 +5,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 7.5px 15px; /* Reduced padding */
-    height: 52.5px; /* Reduced height */
+    padding: 7.5px 15px;
+    height: 52.5px;
     position: fixed;
     top: 0;
     left: 0;
@@ -21,21 +21,52 @@
     max-width: 100%;
 }
 
-.menuContainer {
-    display: flex;
-    flex-direction: column;
-    margin: auto 0;
+.userMenu {
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    margin-right: 15px;
+    position: relative;
+    cursor: pointer;
 }
 
-.menuLine {
-    height: 1.5px;
-    border: 1.5px solid #fff;
-    margin-top: 3px;
+.userEmail {
+    margin-right: 25px;
+    white-space: nowrap;
 }
 
-/* Main content offset for the header */
+.dropdown {
+    position: absolute;
+    top: 100%;
+    right: 15px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    z-index: 50;
+}
+
+.logoutButton {
+    background: linear-gradient(90deg, #ff7f50, #ff4500);
+    color: #ffffff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+    .logoutButton:hover {
+        background: linear-gradient(90deg, #ff6347, #ff0000);
+        transform: scale(1.05);
+    }
+
+/* Main content */
 .mainContent {
-    padding-top: 60px;
+    padding-top: 0px;
     display: flex;
     justify-content: center;
     flex-direction: row;
@@ -45,8 +76,8 @@
 .calendarContainer {
     width: 56.25vw; /* 75% of the screen width scaled down */
     max-width: 900px;
-    height: calc(75vh - 60px);
-    padding: 15px;
+    height: calc(75vh - 10px);
+    padding: 5px;
     position: relative;
 }
 
