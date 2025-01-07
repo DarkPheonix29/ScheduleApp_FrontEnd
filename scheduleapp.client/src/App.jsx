@@ -11,6 +11,7 @@ import StudentCalendar from './pages/StudentCalendar/StudentCalendar';
 import InstructorDashboard from './pages/InstructorDashboard/InstructorDashboard';
 import InstructorCalendar from './pages/InstructorCalendar/InstructorCalendar';
 import AdminPanel from './pages/AdminPanel/AdminPanel'; // Import Admin Panel
+import StudentProfile from './pages/StudentProfile/StudentProfile'; // Import Student Profile
 import ProtectedRoute from './Services/ProtectedRoute'; // New protected route component
 
 function App() {
@@ -46,6 +47,10 @@ function App() {
                         <Route
                             path="/admin-panel"
                             element={<ProtectedRoute requiredRole="admin"><AdminPanel /></ProtectedRoute>}
+                        />
+                        <Route
+                            path="/student/:email"
+                            element={<ProtectedRoute requiredRole="instructor"><StudentProfile /></ProtectedRoute>}
                         />
                     </Routes>
                 </div>

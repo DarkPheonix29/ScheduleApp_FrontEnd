@@ -41,6 +41,7 @@ const Header = ({ userEmail, onLogout }) => {
 const InstructorDashboard = () => {
     const [userEmail, setUserEmail] = useState('');
     const [availability, setAvailability] = useState([]);
+    const [students, setStudents] = useState([]); // Make sure it's initialized as an array
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -50,6 +51,7 @@ const InstructorDashboard = () => {
         if (user) {
             setUserEmail(user.email);
             fetchAvailability(user.email);
+            fetchStudents();  // Fetch the list of students when the component mounts
         } else {
             navigate('/login');
         }
@@ -66,8 +68,7 @@ const InstructorDashboard = () => {
         try {
             const response = await axios.get(`/api/instructoravailability/all-availability`);
             const formattedAvailability = response.data.map((a) => {
-                // Convert start and end times to the user's local time zone
-                const startDate = moment.tz(a.start, 'UTC').format(); // Assuming UTC storage
+                const startDate = moment.tz(a.start, 'UTC').format();
                 const endDate = moment.tz(a.end, 'UTC').format();
                 return {
                     title: 'Available',
@@ -80,6 +81,21 @@ const InstructorDashboard = () => {
             console.error('Error fetching availability:', error);
         }
     };
+
+    const fetchStudents = async () => {
+        try {
+            const response = await axios.get('/api/account/students');
+            console.log('Students Response:', response.data);  // Log the response to inspect the data
+            if (Array.isArray(response.data)) {
+                setStudents(response.data); // Ensure the response is an array
+            } else {
+                console.error('Fetched data is not an array:', response.data);
+            }
+        } catch (error) {
+            console.error('Error fetching students:', error);
+        }
+    };
+
 
     const handleSelectSlot = async (slotInfo) => {
         const { start, end } = slotInfo;
@@ -109,7 +125,22 @@ const InstructorDashboard = () => {
             <section className={styles.welcomeMessage}>
                 <h1>Welcome back, {userEmail}!</h1>
                 <p className={styles.lessonDate}>Set your availability for lessons below:</p>
+                <Link to="/instructor-calendar">View full calendar</Link>
             </section>
+            <div className={styles.studentsSection}>
+                <h3>Students</h3>
+                <ul>
+                    {students.length > 0 ? (
+                        students.map((student) => (
+                            <li key={student.email}>
+                                <Link to={`/student/${student.email}`}>{student.email}</Link>
+                            </li>
+                        ))
+                    ) : (
+                        <p>No students available.</p>
+                    )}
+                </ul>
+            </div>
             <div className={styles.calendarContainer}>
                 <Calendar
                     localizer={localizer}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import { getAuth, signOut } from 'firebase/auth';
@@ -39,7 +40,7 @@ const StudentCalendar = () => {
 
         if (user) {
             setUserEmail(user.email);
-            fetchAllAvailability();
+            fetchAvailability(user.email);
         } else {
             navigate('/login');
         }
@@ -102,9 +103,13 @@ const StudentCalendar = () => {
                     startAccessor="start"
                     endAccessor="end"
                     defaultView="week"
+                    views={['month', 'week', 'day']}
+                    step = { 60}
+                    showMultiDayTimes
+                    defaultDate = { new Date() }
+                    onSelectSlot = { handleSelectEvent}
                     selectable
-                    onSelectEvent={handleSelectEvent}
-                    style={{ height: 500 }}
+                    style = {{ height: '100%' }}
                 />
             </section>
         </main>

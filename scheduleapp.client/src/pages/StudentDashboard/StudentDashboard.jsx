@@ -4,6 +4,7 @@ import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import { getAuth, signOut } from 'firebase/auth';
 import styles from './StudentDashboard.module.css';
+import axios from 'axios';
 
 const localizer = momentLocalizer(moment);
 
@@ -41,6 +42,7 @@ const Header = ({ userEmail, onLogout }) => {
 
 const StudentDashboard = () => {
     const [userEmail, setUserEmail] = useState('');
+    const [availability, setAvailability] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -49,6 +51,8 @@ const StudentDashboard = () => {
 
         if (user) {
             setUserEmail(user.email);
+            console.log('userEmail:', userEmail);
+            fetchAvailability(user.email);
         } else {
             navigate('/login');
         }
@@ -57,12 +61,8 @@ const StudentDashboard = () => {
     const handleLogout = () => {
         const auth = getAuth();
         signOut(auth)
-            .then(() => {
-                navigate('/login');
-            })
-            .catch((error) => {
-                console.error('Error logging out:', error);
-            });
+            .then(() => navigate('/login'))
+            .catch((error) => console.error('Error logging out:', error));
     };
 
     const fetchAvailability = async (email) => {
@@ -118,14 +118,17 @@ const StudentDashboard = () => {
             <div className={styles.calendarContainer}>
                 <Calendar
                     localizer={localizer}
-                    events={events}
+                    events={availability}
                     startAccessor="start"
                     endAccessor="end"
                     defaultView="week"
-                    views={['week']}
+                    views={['week', 'day']}
                     step={60}
                     showMultiDayTimes
                     defaultDate={new Date()}
+                    onSelectSlot={handleSelectEvent}
+                    selectable
+                    style={{ height: '100%' }}
                 />
             </div>
         </main>

@@ -5,6 +5,7 @@ import moment from 'moment-timezone';
 import { getAuth, signOut } from 'firebase/auth';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import styles from './InstructorCalendar.module.css';
+import axios from 'axios';
 
 const localizer = momentLocalizer(moment);
 
@@ -51,6 +52,7 @@ const InstructorCalendar = () => {
 
         if (user) {
             setUserEmail(user.email);
+            fetchAvailability(user.email);
         } else {
             navigate('/login');
         }
@@ -59,12 +61,8 @@ const InstructorCalendar = () => {
     const handleLogout = () => {
         const auth = getAuth();
         signOut(auth)
-            .then(() => {
-                navigate('/login');
-            })
-            .catch((error) => {
-                console.error('Error logging out:', error);
-            });
+            .then(() => navigate('/login'))
+            .catch((error) => console.error('Error logging out:', error));
     };
 
     const fetchAvailability = async (email) => {
@@ -117,9 +115,13 @@ const InstructorCalendar = () => {
                     events={availability}
                     startAccessor="start"
                     endAccessor="end"
-                    defaultView="month"
+                    defaultView="week"
                     views={['month', 'week', 'day']}
+                    step={60}
+                    showMultiDayTimes
                     defaultDate={new Date()}
+                    onSelectSlot={handleSelectSlot}
+                    selectable
                     style={{ height: '100%' }}
                 />
             </div>
