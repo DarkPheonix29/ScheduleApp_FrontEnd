@@ -5,7 +5,7 @@ main {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    padding-top: 120px; /* Ensure the button is below the fixed header */
+    padding-top: 200px; /* Ensure the button is below the fixed header */
     font-family: Rubik, Helvetica, Arial, Verdana, sans-serif; /* Match global font */
 }
 

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
-import { startOfWeek, addDays } from 'date-fns';
 import { getAuth, signOut } from 'firebase/auth';
 import styles from './StudentDashboard.module.css';
 
@@ -40,27 +39,7 @@ const Header = ({ userEmail, onLogout }) => {
     );
 };
 
-const WelcomeMessage = ({ username, nextLessonDate }) => (
-    <section className={styles.welcomeMessage}>
-        <h1>
-            <strong>Welcome back, {username}!</strong>
-        </h1>
-        <p className={styles.lessonDate}>
-            Your next lesson is: {nextLessonDate}
-        </p>
-    </section>
-);
-
-const ScheduleSection = () => (
-    <section className={styles.scheduleContainer}>
-        <h2 className={styles.scheduleTitle}>Schedule your next lesson!</h2>
-        <Link to="/student-calendar" className={styles.viewCalendar}>
-            View full calendar
-        </Link>
-    </section>
-);
-
-const StudentDashboard = ({ username }) => {
+const StudentDashboard = () => {
     const [userEmail, setUserEmail] = useState('');
     const navigate = useNavigate();
 
@@ -71,7 +50,7 @@ const StudentDashboard = ({ username }) => {
         if (user) {
             setUserEmail(user.email);
         } else {
-            navigate('/login'); // Redirect to login if no user is logged in
+            navigate('/login');
         }
     }, [navigate]);
 
@@ -79,27 +58,63 @@ const StudentDashboard = ({ username }) => {
         const auth = getAuth();
         signOut(auth)
             .then(() => {
-                navigate('/login'); // Redirect to login after logout
+                navigate('/login');
             })
             .catch((error) => {
                 console.error('Error logging out:', error);
             });
     };
 
-    const currentWeek = [...Array(7)].map((_, i) => addDays(startOfWeek(new Date()), i));
-    const events = [
-        {
-            title: 'Lesson with Instructor',
-            start: new Date(currentWeek[1].setHours(10, 0)),
-            end: new Date(currentWeek[1].setHours(11, 0)),
-        },
-    ];
+    const fetchAvailability = async (email) => {
+        try {
+            const response = await axios.get(`/api/studentlesson/all-availability`);
+            const formattedAvailability = response.data.map((a) => {
+                // Convert start and end times to the user's local time zone
+                const startDate = moment.tz(a.start, 'UTC').format(); // Assuming UTC storage
+                const endDate = moment.tz(a.end, 'UTC').format();
+                return {
+                    title: 'Available',
+                    start: new Date(startDate),
+                    end: new Date(endDate),
+                };
+            });
+            setAvailability(formattedAvailability);
+        } catch (error) {
+            console.error('Error fetching availability:', error);
+        }
+    };
+
+    const handleSelectEvent = async (event) => {
+        const duration = (new Date(event.end) - new Date(event.start)) / (1000 * 60 * 60);
+        if (duration >= 1 && duration <= 2) {
+            try {
+                await axios.post('/api/studentlesson/book-lesson', {
+                    studentEmail: userEmail,
+                    instructorEmail: event.instructorEmail,
+                    start: event.start,
+                    end: event.end,
+                });
+                alert('Lesson booked successfully!');
+            } catch (error) {
+                console.error('Error booking lesson:', error);
+                alert('Failed to book lesson.');
+            }
+        } else {
+            alert('Please book lessons of 1 or 2 hours only.');
+        }
+    };
 
     return (
         <main className={styles.welcomeContainer}>
             <Header userEmail={userEmail} onLogout={handleLogout} />
-            <WelcomeMessage username={username} nextLessonDate="10 AM, October 2nd" />
-            <ScheduleSection />
+            <section className={styles.welcomeMessage}>
+                <h1>Welcome back, {userEmail}!</h1>
+                <p>Your next lesson is: 10 AM, October 2nd</p>
+            </section>
+            <section className={styles.scheduleContainer}>
+                <h2>Schedule your next lesson!</h2>
+                <Link to="/student-calendar">View full calendar</Link>
+            </section>
             <div className={styles.calendarContainer}>
                 <Calendar
                     localizer={localizer}

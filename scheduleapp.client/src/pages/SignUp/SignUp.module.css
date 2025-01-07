@@ -1,117 +1,116 @@
-﻿/* Login Page Styles */
-main {
+﻿.signUpContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start; /* Move form box upwards */
     min-height: 100vh;
-    padding-top: 120px; /* Ensure the button is below the fixed header */
-    font-family: Rubik, Helvetica, Arial, Verdana, sans-serif; /* Match global font */
+    padding-top: 200px; /* Reduced padding to move the box upwards */
+    font-family: Rubik, Helvetica, Arial, Verdana, sans-serif;
 }
 
-/* Form container styling */
-.loginForm {
+.formWrapper {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
     width: 100%;
-    max-width: 400px; /* Limit the form width */
+    max-width: 800px;
+    margin-top: 40px; /* Adjusted to make the form box closer to the top */
+}
+
+.signUpForm {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
     padding: 20px;
     background-color: #f8f9fa;
     border-radius: 8px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* Left Column */
+.leftColumn {
+    display: flex;
+    flex-direction: column;
+    width: 48%; /* Adjust as needed */
+}
+
+/* Right Column */
+.rightColumn {
+    display: flex;
+    flex-direction: column;
+    width: 48%; /* Adjust as needed */
+}
+
 .inputGroup {
     display: flex;
     flex-direction: column;
-    width: 100%;
     margin-bottom: 16px;
 }
 
-    /* Label styling */
     .inputGroup label {
-        color: black; /* Ensure label text is black */
+        color: black;
         font-size: 14px;
-        margin-bottom: 5px; /* Add space between label and input field */
+        margin-bottom: 5px;
     }
 
-    /* Input styling */
     .inputGroup input {
         padding: 10px;
         font-size: 16px;
         border: 1px solid #ccc;
         border-radius: 5px;
         margin-top: 5px;
-        color: black; /* Ensure text color is black */
-        background-color: #fff; /* Ensure background remains white */
-        box-sizing: border-box; /* Ensure consistent sizing */
+        color: black;
+        background-color: #fff;
     }
 
-        /* Input hover and focus */
         .inputGroup input:focus {
             outline: none;
-            border-color: #6ce5ff; /* Highlight color for input focus */
+            border-color: #6ce5ff;
         }
 
-/* Dark mode adjustment for labels and inputs */
-body.dark-mode .inputGroup label {
-    color: black; /* Keep label text black in dark mode */
-}
-
-body.dark-mode .inputGroup input {
-    color: black; /* Keep text color black in dark mode */
-    background-color: #fff; /* Keep background white for input fields */
-}
-
-.inputGroup input:focus {
-    outline: none;
-    border-color: #6ce5ff; /* Highlight color for input focus */
-}
-
-/* Error message styling */
 .error {
     color: red;
     font-size: 14px;
     margin-top: 10px;
 }
 
-/* Adjust button styling */
-.loginOption {
+.signUpButton {
     color: #6ce5ff;
-    font: 700 24px Inter, sans-serif; /* Adjust font size */
     background-color: transparent;
     border: 2px solid #6ce5ff;
-    padding: 12px 24px; /* Make the button smaller */
+    padding: 12px 24px;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
     margin-top: 20px;
     width: 100%;
     max-width: 250px;
     border-radius: 5px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto; /* Center the sign-up button */
 }
 
-    .loginOption:hover {
+    .signUpButton:hover {
         background-color: #6ce5ff;
         color: #fff;
     }
 
-/* Register link styling */
-.registerLink {
+.loginLink {
     margin-top: 20px;
     font-size: 16px;
+    text-align: center;
+    color: black; /* Center the login link */
 }
 
-    .registerLink a {
-        color: #6ce5ff;
+    .loginLink a {
+        color: #6ce5ff; /* Change to black */
         text-decoration: none;
     }
 
-        .registerLink a:hover {
+        .loginLink a:hover {
             text-decoration: underline;
         }
 
-/* Header and logo */
 .header {
     background-color: #305279;
     width: 100%;
@@ -127,20 +126,4 @@ body.dark-mode .inputGroup input {
 .logo {
     max-width: 100%;
     height: auto;
-}
-
-/* Mobile responsiveness */
-@media (max-width: 991px) {
-    .loginOption {
-        font-size: 20px;
-        padding: 12px 24px;
-    }
-
-    .header {
-        padding: 8px 0;
-    }
-
-    .loginForm {
-        padding: 16px;
-    }
 }

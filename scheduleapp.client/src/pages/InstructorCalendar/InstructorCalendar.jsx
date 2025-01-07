@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import { getAuth, signOut } from 'firebase/auth';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import styles from './InstructorCalendar.module.css';
 
 const localizer = momentLocalizer(moment);
 
-// Header Component
 const Header = ({ userEmail, onLogout }) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
@@ -41,9 +40,9 @@ const Header = ({ userEmail, onLogout }) => {
     );
 };
 
-// InstructorCalendar Component
 const InstructorCalendar = () => {
     const [userEmail, setUserEmail] = useState('');
+    const [availability, setAvailability] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -68,13 +67,46 @@ const InstructorCalendar = () => {
             });
     };
 
-    const events = [
-        {
-            title: 'Lesson with Student',
-            start: new Date(),
-            end: new Date(),
-        },
-    ];
+    const fetchAvailability = async (email) => {
+        try {
+            const response = await axios.get(`/api/instructoravailability/all-availability`);
+            const formattedAvailability = response.data.map((a) => {
+                // Convert start and end times to the user's local time zone
+                const startDate = moment.tz(a.start, 'UTC').format(); // Assuming UTC storage
+                const endDate = moment.tz(a.end, 'UTC').format();
+                return {
+                    title: 'Available',
+                    start: new Date(startDate),
+                    end: new Date(endDate),
+                };
+            });
+            setAvailability(formattedAvailability);
+        } catch (error) {
+            console.error('Error fetching availability:', error);
+        }
+    };
+
+    const handleSelectSlot = async (slotInfo) => {
+        const { start, end } = slotInfo;
+
+        if ((end - start) / (1000 * 60 * 60) >= 1) {
+            try {
+                const response = await axios.post('/api/instructoravailability/add-availability', {
+                    instructorEmail: userEmail,
+                    start,
+                    end,
+                    status: 'Available',
+                });
+                setAvailability((prev) => [...prev, { title: 'Available', start, end }]);
+                alert('Availability added successfully!');
+            } catch (error) {
+                console.error('Error adding availability:', error);
+                alert('Failed to add availability.');
+            }
+        } else {
+            alert('Please select a time slot of at least 1 hour.');
+        }
+    };
 
     return (
         <main className={styles.mainContent}>
@@ -82,7 +114,7 @@ const InstructorCalendar = () => {
             <div className={styles.calendarContainer}>
                 <Calendar
                     localizer={localizer}
-                    events={events}
+                    events={availability}
                     startAccessor="start"
                     endAccessor="end"
                     defaultView="month"

@@ -1,27 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
-import { startOfWeek, addDays } from 'date-fns';
 import { getAuth, signOut } from 'firebase/auth';
+import axios from 'axios';
 import styles from './InstructorDashboard.module.css';
+import { Link, useNavigate } from 'react-router-dom';
 
 const localizer = momentLocalizer(moment);
 
-// Header Component with email and logout
 const Header = ({ userEmail, onLogout }) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-    const toggleDropdown = () => {
-        setIsDropdownOpen(!isDropdownOpen);
-    };
+    const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
     return (
         <header className={styles.header}>
             <Link to="/">
                 <img
-                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/b9e9e5de92c55fb604aec2676d045431b667b6fc690c90eccbe454d2f5e88fde?placeholderIfAbsent=true&apiKey=7a6d6551ec8b4e26865b758612878fc8"
-                    alt="Company Logo"
+                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/b9e9e5de92c55fb604aec2676d045431b667b6fc690c90eccbe454d2f5e88fde"
+                    alt="Logo"
                     className={styles.logo}
                 />
             </Link>
@@ -41,28 +38,9 @@ const Header = ({ userEmail, onLogout }) => {
     );
 };
 
-// WelcomeMessage Component
-const WelcomeMessage = ({ username, nextLessonDate }) => (
-    <section className={styles.welcomeMessage}>
-        <h1>
-            <strong>Welcome back, {username}!</strong>
-        </h1>
-        <p className={styles.lessonDate}>
-            Your next lesson is: {nextLessonDate}
-        </p>
-    </section>
-);
-
-// Schedule Section with link to full calendar
-const ScheduleSection = () => (
-    <section className={styles.scheduleContainer}>
-        <h2 className={styles.scheduleTitle}>View your upcoming lessons!</h2>
-        <Link to="/instructor-calendar" className={styles.viewCalendar}>View full calendar</Link>
-    </section>
-);
-
-const InstructorDashboard = ({ username }) => {
+const InstructorDashboard = () => {
     const [userEmail, setUserEmail] = useState('');
+    const [availability, setAvailability] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -71,43 +49,81 @@ const InstructorDashboard = ({ username }) => {
 
         if (user) {
             setUserEmail(user.email);
+            fetchAvailability(user.email);
         } else {
-            navigate('/login'); // Redirect to login if no user is logged in
+            navigate('/login');
         }
     }, [navigate]);
 
     const handleLogout = () => {
         const auth = getAuth();
         signOut(auth)
-            .then(() => {
-                navigate('/login'); // Redirect to login after logout
-            })
-            .catch((error) => {
-                console.error('Error logging out:', error);
-            });
+            .then(() => navigate('/login'))
+            .catch((error) => console.error('Error logging out:', error));
     };
 
-    const currentWeek = [...Array(7)].map((_, i) => addDays(startOfWeek(new Date()), i));
-    const events = [
-        { title: 'Lesson with Student', start: new Date(currentWeek[1].setHours(10, 0)), end: new Date(currentWeek[1].setHours(11, 0)) }
-    ];
+    const fetchAvailability = async (email) => {
+        try {
+            const response = await axios.get(`/api/instructoravailability/all-availability`);
+            const formattedAvailability = response.data.map((a) => {
+                // Convert start and end times to the user's local time zone
+                const startDate = moment.tz(a.start, 'UTC').format(); // Assuming UTC storage
+                const endDate = moment.tz(a.end, 'UTC').format();
+                return {
+                    title: 'Available',
+                    start: new Date(startDate),
+                    end: new Date(endDate),
+                };
+            });
+            setAvailability(formattedAvailability);
+        } catch (error) {
+            console.error('Error fetching availability:', error);
+        }
+    };
+
+    const handleSelectSlot = async (slotInfo) => {
+        const { start, end } = slotInfo;
+
+        if ((end - start) / (1000 * 60 * 60) >= 1) {
+            try {
+                const response = await axios.post('/api/instructoravailability/add-availability', {
+                    instructorEmail: userEmail,
+                    start,
+                    end,
+                    status: 'Available',
+                });
+                setAvailability((prev) => [...prev, { title: 'Available', start, end }]);
+                alert('Availability added successfully!');
+            } catch (error) {
+                console.error('Error adding availability:', error);
+                alert('Failed to add availability.');
+            }
+        } else {
+            alert('Please select a time slot of at least 1 hour.');
+        }
+    };
 
     return (
         <main className={styles.mainContainer}>
             <Header userEmail={userEmail} onLogout={handleLogout} />
-            <WelcomeMessage username={username} nextLessonDate="10 AM, October 2nd" />
-            <ScheduleSection />
+            <section className={styles.welcomeMessage}>
+                <h1>Welcome back, {userEmail}!</h1>
+                <p className={styles.lessonDate}>Set your availability for lessons below:</p>
+            </section>
             <div className={styles.calendarContainer}>
                 <Calendar
                     localizer={localizer}
-                    events={events}
+                    events={availability}
                     startAccessor="start"
                     endAccessor="end"
                     defaultView="week"
-                    views={['week']}
+                    views={['week', 'day']}
                     step={60}
                     showMultiDayTimes
                     defaultDate={new Date()}
+                    onSelectSlot={handleSelectSlot}
+                    selectable
+                    style={{ height: '100%' }}
                 />
             </div>
         </main>
