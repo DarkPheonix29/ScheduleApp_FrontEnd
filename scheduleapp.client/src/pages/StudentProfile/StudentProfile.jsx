@@ -69,6 +69,10 @@ const StudentProfile = () => {
                 <div className={styles.profileItem}>
                     <strong>Date of Birth:</strong> {new Date(studentData.dateOfBirth).toLocaleDateString()}
                 </div>
+                <h2>{studentData.name}</h2>
+                <button onClick={() => navigate(`/excelviewer/${studentData.email}`)}>
+                    Edit Instructor Card
+                </button>
             </section>
             <section className={styles.scheduleContainer}>
                 <Link to="/instructor-dashboard">Back to Dashboard</Link>

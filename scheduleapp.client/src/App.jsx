@@ -13,6 +13,7 @@ import InstructorCalendar from './pages/InstructorCalendar/InstructorCalendar';
 import AdminPanel from './pages/AdminPanel/AdminPanel'; // Import Admin Panel
 import StudentProfile from './pages/StudentProfile/StudentProfile'; // Import Student Profile
 import ProtectedRoute from './Services/ProtectedRoute'; // New protected route component
+import ExcelViewer from './pages/ExcelViewer/ExcelViewer'; // Import Excel Viewer
 
 function App() {
     return (
@@ -51,6 +52,10 @@ function App() {
                         <Route
                             path="/student/:email"
                             element={<ProtectedRoute requiredRole="instructor"><StudentProfile /></ProtectedRoute>}
+                        />
+                        <Route
+                            path="/excelviewer/:email"
+                            element={<ProtectedRoute requiredRole="instructor"><ExcelViewer /></ProtectedRoute>}
                         />
                     </Routes>
                 </div>

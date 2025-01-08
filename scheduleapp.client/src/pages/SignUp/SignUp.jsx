@@ -60,15 +60,25 @@ function SignUpPage() {
                 dateOfBirth,
             });
 
-            if (response.data.message === "User registered successfully") {
-                navigate("/login");
+
+            if (response.status === 200) {
+                if (response.data.message === "User registered successfully") {
+                    navigate("/login");
+                } else if (response.data.message === "Invalid registration key") {
+                    setError("Invalid registration key.");
+                } else if (response.data.hasOwnProperty('errors')) {
+                    // Handle potential error objects returned by the API
+                    setError(response.data.errors.join(', '));
+                } else {
+                    setError("An unexpected error occurred during signup.");
+                }
             } else {
-                setError("Signup failed. Please try again.");
+                setError(`Signup failed with status code: ${response.status}`);
             }
         } catch (err) {
             setError(err.response?.data?.message || "An error occurred during signup.");
         }
-    };
+    }
 
 
     return (
