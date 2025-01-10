@@ -120,7 +120,7 @@ const InstructorDashboard = () => {
     };
 
     return (
-        <main className={styles.mainContainer}>
+        <main className={styles.main}>
             <Header userEmail={userEmail} onLogout={handleLogout} />
             <section className={styles.welcomeMessage}>
                 <h1>Welcome back, {userEmail}!</h1>

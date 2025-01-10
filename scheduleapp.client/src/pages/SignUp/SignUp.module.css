@@ -4,7 +4,7 @@
     align-items: center;
     justify-content: flex-start; /* Move form box upwards */
     min-height: 100vh;
-    padding-top: 200px; /* Reduced padding to move the box upwards */
+    padding-top: 100px; /* Reduced padding to move the box upwards */
     font-family: Rubik, Helvetica, Arial, Verdana, sans-serif;
 }
 

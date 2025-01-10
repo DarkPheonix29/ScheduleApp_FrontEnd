@@ -61,12 +61,13 @@ function LoginPage() {
         } catch (error) {
             console.error("Login Error:", error.message);
             setError(
-                error.code === "auth/user-not-found"
+                error.code === "auth/invalid-credential"
                     ? "No account found with this email."
                     : error.code === "auth/wrong-password"
                         ? "Incorrect password. Please try again."
-                        : "Login failed. Please try again later."
+                        : error.message 
             );
+
         }
     };
 

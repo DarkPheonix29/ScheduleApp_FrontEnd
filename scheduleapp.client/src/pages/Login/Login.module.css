@@ -1,13 +1,5 @@
 ﻿/* Login Page Styles */
-main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding-top: 200px; /* Ensure the button is below the fixed header */
-    font-family: Rubik, Helvetica, Arial, Verdana, sans-serif; /* Match global font */
-}
+
 
 /* Form container styling */
 .loginForm {
