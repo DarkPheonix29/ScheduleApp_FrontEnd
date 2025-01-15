@@ -2,135 +2,119 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import * as XLSX from "xlsx";
 import axios from "axios";
-import "./ExcelViewer.module.css"; // Ensure proper path to the CSS file
+import "./ExcelViewer.module.css";
 
 const ExcelViewer = () => {
-    const { email } = useParams();
+    const { profileId } = useParams();
     const [excelData, setExcelData] = useState([]);
-    const [columnWidths, setColumnWidths] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetchExcelFile(email);
-    }, [email]);
+        fetchExcelData(profileId);
+    }, [profileId]);
 
-    const fetchExcelFile = async (email) => {
+    const fetchExcelData = async (profileId) => {
         setLoading(true);
         setError(null);
 
         try {
-            const response = await axios.get(`/api/excel/excelget/${email}`, {
-                responseType: "arraybuffer",
-            });
+            const response = await axios.get(`/api/excel/getExcelData/${profileId}`);
+            console.log("Response data:", response.data);
 
-            const data = response.data;
-            const workbook = XLSX.read(data, { type: "array" });
-            const sheetName = workbook.SheetNames[0];
-            const sheet = workbook.Sheets[sheetName];
-
-            const range = XLSX.utils.decode_range(sheet["!ref"]);
-            const jsonData = [];
-            const widths = [];
-
-            for (let row = range.s.r; row <= range.e.r; row++) {
-                const rowData = [];
-                for (let col = range.s.c; col <= range.e.c; col++) {
-                    const cellRef = XLSX.utils.encode_cell({ r: row, c: col });
-                    const cell = sheet[cellRef];
-                    const cellValue = cell ? cell.v : "";
-                    rowData.push(cellValue);
-
-                    // Update column widths based on cell content
-                    if (!widths[col]) widths[col] = 10; // Default width
-                    if (cellValue) {
-                        const length = cellValue.toString().length;
-                        widths[col] = Math.max(widths[col], length);
-                    }
-                }
-                jsonData.push(rowData);
+            if (Array.isArray(response.data)) {
+                setExcelData(response.data); // Set the received array of rows
+            } else {
+                setExcelData([]);
+                setError("No data found for the requested profile.");
             }
-
-            setExcelData(jsonData);
-            setColumnWidths(widths.map((width) => width * 8)); // Convert to pixels
         } catch (err) {
-            console.error("Error fetching Excel file:", err);
-            setError("Failed to load the Excel file. Please try again.");
+            console.error("Error fetching Excel data:", err);
+            setError("Failed to load the Excel data. Please try again.");
+            setExcelData([]);
         } finally {
             setLoading(false);
         }
     };
 
-    const saveExcelFile = async () => {
+    const updateLessonStatus = async (lessonColumn, status, category) => {
+        console.log("Sending data:", { profileId, lessonColumn, status, category });
+
         try {
-            const workbook = XLSX.utils.book_new();
-            const worksheet = XLSX.utils.aoa_to_sheet(excelData);
-            XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
-
-            const blob = new Blob(
-                [XLSX.write(workbook, { bookType: "xlsx", type: "array" })],
-                { type: "application/octet-stream" }
-            );
-
-            const formData = new FormData();
-            formData.append("file", blob, `${email}_updated_template.xlsx`);
-
-            await axios.post(`/api/excel/excelpost/${email}`, formData, {
-                headers: { "Content-Type": "multipart/form-data" },
+            await axios.post(`/api/excel/updateLessonStatus`, {
+                profileId,
+                lessonColumn,
+                status,
+                category, // Send category along with the other data
             });
-
-            alert("Excel file saved successfully!");
+            alert("Lesson status updated successfully!");
+            fetchExcelData(profileId); // Refresh the data after update
         } catch (err) {
-            console.error("Error saving Excel file:", err);
-            alert("Failed to save the Excel file. Please try again.");
+            console.error("Error updating lesson status:", err);
+            alert("Failed to update the lesson status. Please try again.");
         }
     };
 
-    const handleEditCell = (rowIndex, colIndex, value) => {
+    const initializeExcelData = async (topic, subtopic, category) => {
+        try {
+            await axios.post(`/api/excel/initializeExcelData`, {
+                profileId,
+                topic,
+                subtopic,
+                category,
+            });
+            alert("Excel data initialized successfully!");
+            fetchExcelData(profileId); // Refresh the data after initialization
+        } catch (err) {
+            console.error("Error initializing Excel data:", err);
+            alert("Failed to initialize the Excel data. Please try again.");
+        }
+    };
+
+    const handleEditCell = (rowIndex, colKey, value) => {
         const updatedData = [...excelData];
-        if (!updatedData[rowIndex]) {
-            updatedData[rowIndex] = Array(columnWidths.length).fill("");
-        }
-        updatedData[rowIndex][colIndex] = value;
-        setExcelData(updatedData);
+        updatedData[rowIndex][colKey] = value;
+        setExcelData(updatedData); // Update local state immediately
+
+        // Find the category from the current row (use lowercase 'category')
+        const category = updatedData[rowIndex].category || "defaultCategory"; // Adjusted to match the response field name
+
+        // Trigger lesson status update with category
+        updateLessonStatus(colKey, value, category); // Update lesson status based on the modified column and category
     };
 
-    if (loading) return <p>Loading Excel file...</p>;
+    // Filter out 'excelDataId' and 'profileId' from each row
+    const filteredExcelData = excelData.map(row => {
+        const { excelDataId, profileId, ...rest } = row;
+        return rest;
+    });
 
+    if (loading) return <p>Loading Excel data...</p>;
     if (error) return <p>{error}</p>;
 
     return (
-        <div>
-            <h1>Edit Excel File for {email}</h1>
+        <div className="excel-viewer">
+            <h1>Excel Data for Profile ID: {profileId}</h1>
             <div className="table-container">
                 <table>
                     <thead>
                         <tr>
-                            {columnWidths.map((width, colIndex) => (
-                                <th
-                                    key={`header-${colIndex}`}
-                                    style={{
-                                        width: `${width}px`,
-                                    }}
-                                ></th>
-                            ))}
+                            {filteredExcelData.length > 0 &&
+                                Object.keys(filteredExcelData[0]).map((key) => (
+                                    <th key={key}>{key}</th>
+                                ))}
                         </tr>
                     </thead>
                     <tbody>
-                        {excelData.map((row, rowIndex) => (
+                        {filteredExcelData.map((row, rowIndex) => (
                             <tr key={`row-${rowIndex}`}>
-                                {row.map((cell, colIndex) => (
-                                    <td
-                                        key={`cell-${rowIndex}-${colIndex}`}
-                                        style={{
-                                            width: `${columnWidths[colIndex]}px`,
-                                        }}
-                                    >
+                                {Object.keys(row).map((colKey, colIndex) => (
+                                    <td key={`cell-${rowIndex}-${colKey}`}>
                                         <input
                                             type="text"
-                                            value={cell || ""}
+                                            value={row[colKey] || ""}
                                             onChange={(e) =>
-                                                handleEditCell(rowIndex, colIndex, e.target.value)
+                                                handleEditCell(rowIndex, colKey, e.target.value)
                                             }
                                         />
                                     </td>
@@ -140,7 +124,6 @@ const ExcelViewer = () => {
                     </tbody>
                 </table>
             </div>
-            <button onClick={saveExcelFile}>Save Changes</button>
         </div>
     );
 };

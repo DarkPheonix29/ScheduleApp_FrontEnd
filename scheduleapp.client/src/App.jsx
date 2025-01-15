@@ -54,7 +54,7 @@ function App() {
                             element={<ProtectedRoute requiredRole="instructor"><StudentProfile /></ProtectedRoute>}
                         />
                         <Route
-                            path="/excelviewer/:email"
+                            path="/excelviewer/:profileId"
                             element={<ProtectedRoute requiredRole="instructor"><ExcelViewer /></ProtectedRoute>}
                         />
                     </Routes>

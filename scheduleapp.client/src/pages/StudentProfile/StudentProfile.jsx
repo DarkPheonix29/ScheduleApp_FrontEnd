@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import styles from './StudentProfile.module.css'; // Reuse the Student Dashboard styles
+import styles from './StudentProfile.module.css'; // Ensure the CSS path is correct
 
 const Header = ({ userEmail, onLogout }) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -27,13 +27,16 @@ const Header = ({ userEmail, onLogout }) => {
 const StudentProfile = () => {
     const { email } = useParams(); // Retrieve email from URL parameter
     const [studentData, setStudentData] = useState(null);
+    const [profileId, setProfileId] = useState(null); // State to hold the profileId
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchStudentProfile = async (email) => {
             try {
                 const response = await axios.get(`/api/account/studentprofile/${email}`);
-                setStudentData(response.data); // Set the student data from the API
+                const { data } = response;
+                setStudentData(data); // Set the student data
+                setProfileId(data.profileId); // Extract and set the profileId
             } catch (error) {
                 console.error('Error fetching student profile:', error);
                 navigate('/404'); // Redirect to a 404 page if profile is not found
@@ -70,7 +73,7 @@ const StudentProfile = () => {
                     <strong>Date of Birth:</strong> {new Date(studentData.dateOfBirth).toLocaleDateString()}
                 </div>
                 <h2>{studentData.name}</h2>
-                <button onClick={() => navigate(`/excelviewer/${studentData.email}`)}>
+                <button onClick={() => navigate(`/excelviewer/${profileId}`)}>
                     Edit Instructor Card
                 </button>
             </section>

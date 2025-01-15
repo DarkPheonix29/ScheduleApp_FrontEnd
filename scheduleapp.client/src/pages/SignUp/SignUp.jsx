@@ -62,7 +62,7 @@ function SignUpPage() {
 
 
             if (response.status === 200) {
-                if (response.data.message === "User registered successfully") {
+                if (response.data.message === "User signed up successfully.") {
                     navigate("/login");
                 } else if (response.data.message === "Invalid registration key") {
                     setError("Invalid registration key.");
