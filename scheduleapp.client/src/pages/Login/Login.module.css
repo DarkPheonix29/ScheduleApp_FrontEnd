@@ -1,0 +1,132 @@
+﻿/* Login Page Styles */
+
+
+/* Form container styling */
+.loginForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 400px; /* Limit the form width */
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Input group styling */
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+    /* Label styling */
+    .inputGroup label {
+        color: black; /* Ensure label text is black */
+        font-size: 14px;
+        margin-bottom: 5px; /* Add space between label and input field */
+    }
+
+    /* Input styling */
+    .inputGroup input {
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-top: 5px;
+        color: black; /* Keep text color black */
+        background-color: #fff; /* Ensure background remains white */
+    }
+
+/* Dark mode adjustment */
+body.dark-mode .inputGroup label {
+    color: black; /* Keep label text black in dark mode */
+}
+
+body.dark-mode .inputGroup input {
+    color: black; /* Keep text color black in dark mode */
+    background-color: #fff; /* Keep background white for input fields */
+}
+
+.inputGroup input:focus {
+    outline: none;
+    border-color: #6ce5ff; /* Highlight color for input focus */
+}
+
+/* Error message styling */
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+/* Adjust button styling */
+.loginOption {
+    color: #6ce5ff;
+    font: 700 24px Inter, sans-serif; /* Adjust font size */
+    background-color: transparent;
+    border: 2px solid #6ce5ff;
+    padding: 12px 24px; /* Make the button smaller */
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 250px;
+    border-radius: 5px;
+}
+
+    .loginOption:hover {
+        background-color: #6ce5ff;
+        color: #fff;
+    }
+
+/* Register link styling */
+.registerLink {
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+    .registerLink a {
+        color: #6ce5ff;
+        text-decoration: none;
+    }
+
+        .registerLink a:hover {
+            text-decoration: underline;
+        }
+
+/* Header and logo */
+.header {
+    background-color: #305279;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.logo {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 991px) {
+    .loginOption {
+        font-size: 20px;
+        padding: 12px 24px;
+    }
+
+    .header {
+        padding: 8px 0;
+    }
+
+    .loginForm {
+        padding: 16px;
+    }
+}

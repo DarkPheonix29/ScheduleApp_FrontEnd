@@ -1,0 +1,76 @@
+.table-container {
+    overflow-y: auto; /* Enables horizontal scrolling */
+    padding: 10px;
+    background-color: #ffffff;
+    max-width: 100vw; /* Ensures the container fits within the viewport */
+   
+}
+
+table {
+    border-collapse: collapse;
+    margin: 0 auto;
+    table-layout: auto; /* Allows dynamic column sizing */
+    background-color: #ffffff;
+    width: 100%; /* Makes the table responsive */
+    min-width: 800px; /* Ensures a base width for better layout */
+}
+
+th, td {
+    border: 1px solid #d9d9d9;
+    padding: 5px; /* Smaller padding for compactness */
+    text-align: center;
+    vertical-align: middle;
+    font-family: Arial, sans-serif;
+    font-size: 12px; /* Reduced font size for better fit */
+    white-space: nowrap; /* Prevents wrapping of text */
+}
+
+th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+input[type="text"] {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 3px; /* Reduced padding for inputs */
+    border: none;
+    font-family: inherit;
+    font-size: 12px; /* Matches table font size */
+    text-align: inherit;
+    background: transparent;
+}
+
+    input[type="text"]:focus {
+        outline: 2px solid #007bff;
+        background-color: #f9f9f9;
+    }
+
+button {
+    margin-top: 10px;
+    padding: 5px 10px; /* Smaller button size */
+    font-size: 12px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 3px;
+}
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+/* Wider columns for the first three */
+th:nth-child(1),
+th:nth-child(2),
+th:nth-child(3),
+td:nth-child(1),
+td:nth-child(2),
+td:nth-child(3) {
+    min-width: 200px; /* Wider columns */
+    max-width: 300px; /* Maximum width */
+    white-space: nowrap; /* Prevents wrapping */
+    overflow: hidden; /* Ensures no spillover */
+    text-overflow: ellipsis; /* Adds ellipsis for overflowing content */
+}

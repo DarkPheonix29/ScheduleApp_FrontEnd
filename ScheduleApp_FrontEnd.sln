@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "scheduleapp_frontend", "ScheduleApp_FrontEnd\scheduleapp_frontend.esproj", "{C7D319FF-D8A1-4FCE-A2F7-BDFF74CAFA38}"
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "scheduleapp.client", "scheduleapp.client\scheduleapp.client.esproj", "{319B85F2-7183-4869-85ED-7CB60BA39F05}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,12 +11,12 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C7D319FF-D8A1-4FCE-A2F7-BDFF74CAFA38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C7D319FF-D8A1-4FCE-A2F7-BDFF74CAFA38}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C7D319FF-D8A1-4FCE-A2F7-BDFF74CAFA38}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{C7D319FF-D8A1-4FCE-A2F7-BDFF74CAFA38}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C7D319FF-D8A1-4FCE-A2F7-BDFF74CAFA38}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C7D319FF-D8A1-4FCE-A2F7-BDFF74CAFA38}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{319B85F2-7183-4869-85ED-7CB60BA39F05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{319B85F2-7183-4869-85ED-7CB60BA39F05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{319B85F2-7183-4869-85ED-7CB60BA39F05}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{319B85F2-7183-4869-85ED-7CB60BA39F05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{319B85F2-7183-4869-85ED-7CB60BA39F05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{319B85F2-7183-4869-85ED-7CB60BA39F05}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

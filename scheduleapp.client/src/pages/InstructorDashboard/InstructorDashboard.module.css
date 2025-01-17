@@ -1,0 +1,125 @@
+/* Header styles */
+.header {
+    background-color: #305279;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 7.5px 0px;
+    height: 52.5px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+}
+
+.logo {
+    aspect-ratio: 3.17;
+    object-fit: contain;
+    object-position: center;
+    width: 187.5px;
+    max-width: 100%;
+}
+
+/* User menu styles */
+.userMenu {
+    position: relative;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    z-index: 20; /* Ensure dropdown appears above other elements */
+}
+
+.userEmail {
+    margin-right: 25px;
+    white-space: nowrap;
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%; /* Align dropdown directly below the email */
+    right: 15px; /* Align dropdown with email */
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    z-index: 50; /* High z-index to ensure visibility */
+    display: block;
+}
+
+/* Logout Button */
+.logoutButton {
+    background: linear-gradient(90deg, #ff7f50, #ff4500);
+    color: #ffffff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+    .logoutButton:hover {
+        background: linear-gradient(90deg, #ff6347, #ff0000);
+        transform: scale(1.05);
+    }
+
+/* Welcome Message */
+.welcomeMessage {
+    margin-top: 0px; /* Reduced margin */
+    width: 581px;
+    max-width: 100%;
+    color: #6ce5ff;
+    text-align: center;
+    font: 50 36px 'Inter', sans-serif;
+}
+
+/* Lesson Date */
+.lessonDate {
+    font-weight: 700;
+    font-size: 24px;
+    color: #000;
+}
+
+/* Schedule Section */
+.scheduleContainer {
+    margin-top: 0px; /* Reduced gap */
+}
+
+/* Calendar Container */
+.calendarContainer {
+    width: 100%;
+    max-width: 932px;
+    height: 225px;
+    border: 1px solid #ccc;
+    margin-top: 0px; /* Reduced gap */
+    position: relative;
+}
+
+/* Layout adjustments */
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Disable scrolling */
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding-top: 0px; /* Ensure the button is below the fixed header */
+    font-family: Rubik, Helvetica, Arial, Verdana, sans-serif; /* Match global font */
+}
+
+@media (max-width: 991px) {
+    .welcomeMessage {
+        margin-top: 0px; /* Reduced margin for smaller screens */
+    }
+}

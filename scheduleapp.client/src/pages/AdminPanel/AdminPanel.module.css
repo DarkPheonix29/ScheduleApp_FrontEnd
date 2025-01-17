@@ -1,0 +1,66 @@
+﻿.adminPanel {
+    overflow-y: auto; /* Enable vertical scrolling */
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f9f9f9;
+    color: #333;
+    height: 100vh;
+    position: relative; /* Make the container relative to position elements inside it */
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+    .header h1 {
+        font-size: 2.5em;
+        color: #444;
+    }
+
+    .header p {
+        color: #666;
+        margin-top: 5px;
+    }
+
+.mainContent {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.section {
+    padding: 1px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+    .section h2 {
+        font-size: 1.8em;
+        color: #222;
+        margin-bottom: 10px;
+    }
+
+    .section p {
+        color: #555;
+        font-size: 1em;
+    }
+
+/* Styling for the logout button */
+.logoutButton {
+    position: absolute; /* Position the button relative to the header */
+    top: 20px;
+    right: 20px;
+    padding: 10px 15px;
+    background-color: #ff4d4f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+    .logoutButton:hover {
+        background-color: #ff7875; /* Slightly darker on hover */
+    }
