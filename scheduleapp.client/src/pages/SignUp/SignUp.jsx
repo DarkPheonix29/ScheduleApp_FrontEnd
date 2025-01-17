@@ -37,7 +37,7 @@ function SignUpPage() {
             return;
         }
 
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.email) {
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
             setError("Invalid email format.");
             return;
         }
