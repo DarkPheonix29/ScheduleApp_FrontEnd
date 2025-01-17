@@ -3,11 +3,16 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom"; // Import navigate for redirection
 import { logOut } from "../../services/authService"; // Import logOut function
 import styles from './AdminPanel.module.css';
+import WebSocketService from "../../webSocketService";
+import { ToastContainer, toast } from "react-toastify"; // Import toast components
+import "react-toastify/dist/ReactToastify.css"; // Import toast styles
 
 function AdminPanel() {
     const [keys, setKeys] = useState([]); // State to store generated keys
     const [newKey, setNewKey] = useState(""); // State for the new key to display
     const navigate = useNavigate(); // For navigation after logout
+    const [notificationMessage, setNotificationMessage] = useState(""); // Notification message input
+    const [notifications, setNotifications] = useState([]); // Received notifications
 
     // Fetch the list of keys from Firestore
     const fetchKeys = async () => {
@@ -23,6 +28,25 @@ function AdminPanel() {
             setKeys([]); // Set to empty array in case of error or invalid response
         }
     };
+
+
+    const handleSendNotification = async () => {
+        if (notificationMessage.trim() !== "") {
+            try {
+                // Send the notification message as plain text
+                await axios.post("/api/admin/sendmessage", notificationMessage, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                setNotificationMessage(""); // Clear the input field
+                console.log("Notification sent successfully!");
+            } catch (error) {
+                console.error("Error sending notification:", error);
+            }
+        }
+    };
+
 
     // Handle the generation of a new registration key
     const handleGenerateKey = async () => {
@@ -77,6 +101,18 @@ function AdminPanel() {
                     <h2>User Management</h2>
                     <p>View, add, and manage users in the system.</p>
                     {/* Add user management functionality here */}
+                </section>
+
+                <section className={styles.section}>
+                    <h2>Send Notifications</h2>
+                    <textarea
+                        value={notificationMessage}
+                        onChange={(e) => setNotificationMessage(e.target.value)}
+                        placeholder="Enter notification message"
+                    />
+                    <button onClick={handleSendNotification} className={styles.button}>
+                        Send Notification
+                    </button>
                 </section>
 
                 <section className={styles.section}>

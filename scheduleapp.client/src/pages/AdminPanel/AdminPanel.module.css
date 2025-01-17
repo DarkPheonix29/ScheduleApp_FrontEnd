@@ -1,4 +1,5 @@
 ﻿.adminPanel {
+    overflow-y: auto; /* Enable vertical scrolling */
     font-family: Arial, sans-serif;
     padding: 20px;
     background-color: #f9f9f9;
@@ -25,7 +26,7 @@
 .mainContent {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 5px;
 }
 
 .section {
