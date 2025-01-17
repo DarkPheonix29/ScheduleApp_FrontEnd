@@ -6,14 +6,14 @@ test('Login with valid credentials and redirect', async ({ page }) => {
 
     // Fill in the login form
     console.log('Filling in email...');
-    await page.fill('#email', 'testuser@example.com');
+    await page.fill('#email', 'kealanstudent@gmail.com');
     console.log('Filling in password...');
-    await page.fill('#password', 'password123');
+    await page.fill('#password', 'Kealan');
 
     // Click the login button
     console.log('Clicking login button...');
     const [response] = await Promise.all([
-        page.waitForURL('https://localhost:5173/login'), // Replace with the expected URL
+        page.waitForURL('https://localhost:5173/student-dashboard'), // Replace with the expected URL
         page.click('button[type="submit"]'),
     ]);
 

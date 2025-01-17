@@ -37,7 +37,7 @@ function SignUpPage() {
             return;
         }
 
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.email) {
             setError("Invalid email format.");
             return;
         }
@@ -48,7 +48,6 @@ function SignUpPage() {
         }
 
         try {
-            // Send the full data to the backend (including name, phone, address, etc.)
             const response = await axios.post("/api/account/signup", {
                 email,
                 password,
@@ -60,14 +59,12 @@ function SignUpPage() {
                 dateOfBirth,
             });
 
-
             if (response.status === 200) {
                 if (response.data.message === "User signed up successfully.") {
                     navigate("/login");
                 } else if (response.data.message === "Invalid registration key") {
                     setError("Invalid registration key.");
                 } else if (response.data.hasOwnProperty('errors')) {
-                    // Handle potential error objects returned by the API
                     setError(response.data.errors.join(', '));
                 } else {
                     setError("An unexpected error occurred during signup.");
@@ -79,7 +76,6 @@ function SignUpPage() {
             setError(err.response?.data?.message || "An error occurred during signup.");
         }
     }
-
 
     return (
         <main className={styles.signUpContainer}>
@@ -103,6 +99,7 @@ function SignUpPage() {
                                 value={formData.name}
                                 onChange={handleChange}
                                 required
+                                data-testid="input-name"
                             />
                         </div>
 
@@ -115,6 +112,7 @@ function SignUpPage() {
                                 value={formData.email}
                                 onChange={handleChange}
                                 required
+                                data-testid="input-email"
                             />
                         </div>
 
@@ -127,6 +125,7 @@ function SignUpPage() {
                                 value={formData.password}
                                 onChange={handleChange}
                                 required
+                                data-testid="input-password"
                             />
                         </div>
 
@@ -139,6 +138,7 @@ function SignUpPage() {
                                 value={formData.confirmPassword}
                                 onChange={handleChange}
                                 required
+                                data-testid="input-confirm-password"
                             />
                         </div>
                     </div>
@@ -153,6 +153,7 @@ function SignUpPage() {
                                 value={formData.registrationKey}
                                 onChange={handleChange}
                                 required
+                                data-testid="input-registration-key"
                             />
                         </div>
 
@@ -165,6 +166,7 @@ function SignUpPage() {
                                 value={formData.phoneNumber}
                                 onChange={handleChange}
                                 required
+                                data-testid="input-phone-number"
                             />
                         </div>
 
@@ -177,6 +179,7 @@ function SignUpPage() {
                                 value={formData.address}
                                 onChange={handleChange}
                                 required
+                                data-testid="input-address"
                             />
                         </div>
 
@@ -189,6 +192,7 @@ function SignUpPage() {
                                 value={formData.pickupAddress}
                                 onChange={handleChange}
                                 required
+                                data-testid="input-pickup-address"
                             />
                         </div>
 
@@ -201,16 +205,17 @@ function SignUpPage() {
                                 value={formData.dateOfBirth}
                                 onChange={handleChange}
                                 required
+                                data-testid="input-date-of-birth"
                             />
                         </div>
                     </div>
 
-                    {error && <p className={styles.error}>{error}</p>}
+                    {error && <p className={styles.error} data-testid="error-message">{error}</p>}
 
-                    <button type="submit" className={styles.signUpButton}>Sign Up</button>
+                    <button type="submit" className={styles.signUpButton} data-testid="sign-up-button">Sign Up</button>
 
                     <p className={styles.loginLink}>
-                        Already have an account? <Link to="/login">Login</Link>
+                        Already have an account? <Link to="/login" data-testid="login-link">Login</Link>
                     </p>
                 </form>
             </div>
